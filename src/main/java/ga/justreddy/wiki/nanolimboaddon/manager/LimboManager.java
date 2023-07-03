@@ -10,6 +10,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.Title;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.config.Configuration;
 
 import java.util.*;
@@ -52,7 +53,7 @@ public class LimboManager {
                 continue;
             }
             servers.put(server, type);
-            ChatUtil.sendConsole("&7[&dNanoLimboAddon&7] &aLoaded server:" + server
+            ChatUtil.sendConsole("&7[&dNanoLimboAddon&7] &aLoaded server: " + server
                     + " with type: " + type);
         }
         this.lobbyServer = config.getConfig().getString("lobby");
@@ -173,4 +174,16 @@ public class LimboManager {
         return pos;
     }
 
+    public void sendToLobby(ProxiedPlayer player) {
+        ServerInfo lobby = ProxyServer.getInstance().getServerInfo(lobbyServer);
+        if (lobby == null) throw new IllegalStateException("Can't find a lobby server to send " + player.getName() + " to!");
+        Server server = player.getServer();
+        if (server == null) return;
+        ServerInfo info = server.getInfo();
+        if (info == null) return;
+        String name = info.getName();
+        if (name == null) return;
+        if (name.equalsIgnoreCase(lobbyServer)) return;
+        player.connect(lobby);
+    }
 }

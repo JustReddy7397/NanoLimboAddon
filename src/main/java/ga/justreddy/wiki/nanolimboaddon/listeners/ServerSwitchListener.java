@@ -21,10 +21,15 @@ public class ServerSwitchListener implements Listener {
     public void onServerSwitch(ServerSwitchEvent event) {
         ProxiedPlayer player = event.getPlayer();
         Server toServer = player.getServer();
+        if (toServer == null) return;
         ServerInfo to = toServer.getInfo();
+        if (to == null) return;
         ServerInfo from = event.getFrom();
+        if (from == null) return;
         String toName = to.getName();
+        if (toName == null) return;
         String fromName = from.getName();
+        if (fromName == null) return;
         if (manager.isServer(fromName, LimboType.QUEUE)
                 && manager.isServer(toName, LimboType.AFK)) return;
         if (manager.isServer(toName, LimboType.AFK)

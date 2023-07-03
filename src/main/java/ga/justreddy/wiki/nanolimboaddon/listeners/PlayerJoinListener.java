@@ -5,6 +5,7 @@ import ga.justreddy.wiki.nanolimboaddon.manager.LimboManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -28,6 +29,8 @@ public class PlayerJoinListener implements Listener {
                 .schedule(NanoLimboAddon.getInstance(), () -> {
                     if (manager.isFull()) {
                         manager.sendToRandomQueueServer(player);
+                    } else {
+                        manager.sendToLobby(player);
                     }
                 }, 100, TimeUnit.MILLISECONDS);
     }

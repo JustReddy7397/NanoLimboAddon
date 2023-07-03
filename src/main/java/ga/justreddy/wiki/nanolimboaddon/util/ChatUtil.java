@@ -11,9 +11,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 public class ChatUtil {
 
     public static BaseComponent format(String message) {
-        return TextComponent.fromLegacyText(
-                ChatColor.translateAlternateColorCodes('&', message))
-                [0];
+        return new TextComponent(ChatColor.translateAlternateColorCodes('&', message));
     }
 
     public static void sendConsole(String message) {

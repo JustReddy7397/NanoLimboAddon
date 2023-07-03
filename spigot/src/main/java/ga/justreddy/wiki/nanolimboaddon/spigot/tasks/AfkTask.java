@@ -26,12 +26,16 @@ public class AfkTask implements Runnable {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) return;
             int remainingTime = manager.getRemainingAfkTime(player);
+            if (remainingTime == 1L) return;
             if (remainingTime == 10) {
                 player.sendMessage(
                         ChatUtil.format(
                                 NanoLimboAddon.getInstance().getConfig().getString("afk-message")
                         )
                 );
+            }
+            if (remainingTime == manager.getAfkTime() / 1000) {
+                manager.sendToAfkServer(player);
             }
         }
     }

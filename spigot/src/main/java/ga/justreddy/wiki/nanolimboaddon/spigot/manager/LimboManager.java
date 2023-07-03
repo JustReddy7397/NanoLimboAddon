@@ -70,6 +70,6 @@ public class LimboManager {
     }
 
     public int getRemainingAfkTime(Player player) {
-        return (int) (System.currentTimeMillis() - afk.getOrDefault(player.getUniqueId(), 0L) / 1000);
+        return (int) ((System.currentTimeMillis() - afk.getOrDefault(player.getUniqueId(), 0L)) / 1000);
     }
 }
