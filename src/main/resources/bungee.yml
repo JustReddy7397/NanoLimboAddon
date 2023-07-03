@@ -1,0 +1,4 @@
+name: NanoLimboAddon
+version: '${project.version}'
+main: ga.justreddy.wiki.nanolimboaddon.NanoLimboAddon
+author: "JustReddy"

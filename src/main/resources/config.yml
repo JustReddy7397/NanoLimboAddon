@@ -1,0 +1,39 @@
+# ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
+# ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
+# ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
+# ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
+# ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
+
+limbos:
+  # Max players allowed on the server before it sends people to the queue
+  # Default: 100
+  max-players: 100
+  first:
+    # This is an "afk" server, here people will get sent once they are
+    # afk for a specific amount of time
+    type: AFK
+  second:
+    # This is a "queue" server, here people will get sent once they join if
+    # the max-players defined below is greater or equal the current amount of players online
+    type: QUEUE
+
+# Where to send the player to when they are leaving the queue
+lobbies:
+  - lobby
+
+titles:
+  afk:
+    title: "&cYou are AFK"
+    subtitle: "&7Run /hub to return to hub"
+  queue:
+    title: "&bLimbo"
+    subtitle: "&bYou are &3&l#<number> &bin the queue"
+
+messages:
+  type-hub: "&cYou are AFK, run /hub to return to hub."
+
+# Only works in the AFK type servers
+# Which command should we allow the player to use while AFK ?
+commands-whitelist:
+  - "hub"
+  - "lobby"

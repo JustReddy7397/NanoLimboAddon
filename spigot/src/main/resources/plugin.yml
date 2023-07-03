@@ -1,0 +1,4 @@
+name: spigot
+version: '${project.version}'
+main: ga.justreddy.wiki.nanolimboaddon.spigot.Spigot
+api-version: '1.20'

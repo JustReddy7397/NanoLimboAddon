@@ -1,0 +1,7 @@
+# AFK SERVERS DEFINED IN THE BUNGEE PLUGINS CONFIG.YML GO HERE!
+limbos:
+  - "first"
+
+# In SECONDS!
+# How long should we wait before we define the player as AFK ?
+afk-time: 20
