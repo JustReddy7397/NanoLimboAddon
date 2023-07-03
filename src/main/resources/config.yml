@@ -16,7 +16,7 @@ limbos:
     # the max-players defined below is greater or equal the current amount of players online
     type: QUEUE
 
-# Where to send the player to when they are leaving the queue
+# Where to send the player to when they are leaving the queue, or joining the server
 lobby: lobby
 
 titles:

@@ -40,6 +40,10 @@ public class LimboManager {
         queue = new HashMap<>();
         titles = new HashMap<>();
         afk = new HashSet<>();
+        this.lobbyServer = config.getConfig().getString("lobby");
+        if (ProxyServer.getInstance().getServerInfo(lobbyServer) == null) {
+            throw new IllegalStateException("The lobby server SPECIFIED in the config.yml has NOT been found!");
+        }
         Configuration limboSection = config.getConfig().getSection("limbos");
         maxPlayers = config.getConfig().getInt("max-players");
         for (String server : limboSection.getKeys()) {
@@ -56,7 +60,6 @@ public class LimboManager {
             ChatUtil.sendConsole("&7[&dNanoLimboAddon&7] &aLoaded server: " + server
                     + " with type: " + type);
         }
-        this.lobbyServer = config.getConfig().getString("lobby");
     }
 
     public boolean isFull() {
