@@ -25,14 +25,14 @@ public class LimboManager {
     Map<String, LimboType> servers;
     Map<ProxiedPlayer, Long> queue;
     Map<ProxiedPlayer, Title> titles;
-    int max_players;
+    int maxPlayers;
 
     public LimboManager(Config config) {
         servers = new HashMap<>();
         queue = new HashMap<>();
         titles = new HashMap<>();
         Configuration limboSection = config.getConfig().getSection("limbos");
-        max_players = limboSection.getInt("max-players");
+        maxPlayers = limboSection.getInt("max-players");
         for (String server : limboSection.getKeys()) {
             LimboType type = LimboType.getType(limboSection.getString(server + ".type"));
             if (type == null) {
@@ -49,7 +49,7 @@ public class LimboManager {
     }
 
     public boolean isFull() {
-        return getOnline() >= max_players;
+        return getOnline() >= maxPlayers;
     }
 
     public int getOnline() {
@@ -97,6 +97,7 @@ public class LimboManager {
             throw new IllegalStateException("Can't find a QUEUE server to send " + player.getName() + " to!");
         }
         player.connect(serverInfo);
+        addToQueue(player);
     }
 
     public void sendToRandomAFKServer(ProxiedPlayer player) {
@@ -113,9 +114,36 @@ public class LimboManager {
                 .collect(Collectors.toList());
         ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(servers.get(0));
         if (serverInfo == null) {
-            throw new IllegalStateException("Can't find a QUEUE server to send " + player.getName() + " to!");
+            throw new IllegalStateException("Can't find a AFK server to send " + player.getName() + " to!");
         }
+        if (player.getServer() == null) return;
+        if (player.getServer().getInfo() == null) return;
+        if (player.getServer().getInfo().getName().equalsIgnoreCase(serverInfo.getName())) return;
         player.connect(serverInfo);
+    }
+
+    public ProxiedPlayer getFirstPlayerInQueue() {
+        List<ProxiedPlayer> result = queue.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        return result.get(0);
+    }
+
+    public int getCurrentPosition(ProxiedPlayer player ) {
+        List<ProxiedPlayer> result = queue.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        int pos = 0;
+        for (int i = 0; i < result.size(); i++) {
+            ProxiedPlayer prox = result.get(i);
+            if (prox.getUniqueId().equals(player.getUniqueId())) {
+                pos = i + 1;
+                break;
+            }
+        }
+        return pos;
     }
 
 }
