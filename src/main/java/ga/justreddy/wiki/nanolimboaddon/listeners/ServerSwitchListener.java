@@ -30,6 +30,10 @@ public class ServerSwitchListener implements Listener {
         if (manager.isServer(toName, LimboType.AFK)
                 && manager.isServer(fromName, LimboType.QUEUE)) return;
 
+        if (manager.isServer(toName, LimboType.AFK)) {
+            return;
+        }
+
     }
 
 }
