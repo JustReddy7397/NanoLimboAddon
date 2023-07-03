@@ -3,11 +3,10 @@
 # ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
 # ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
 # ALL OF THIS REQUIRES A RESTART TO TAKE EFFECT !
-
+max-players: 100
 limbos:
   # Max players allowed on the server before it sends people to the queue
   # Default: 100
-  max-players: 100
   first:
     # This is an "afk" server, here people will get sent once they are
     # afk for a specific amount of time

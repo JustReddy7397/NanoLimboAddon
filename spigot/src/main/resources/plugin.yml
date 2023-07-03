@@ -1,4 +1,4 @@
-name: spigot
+name: NanoLobbyAddon
 version: '${project.version}'
 main: ga.justreddy.wiki.nanolimboaddon.spigot.NanoLimboAddon
 api-version: '1.20'

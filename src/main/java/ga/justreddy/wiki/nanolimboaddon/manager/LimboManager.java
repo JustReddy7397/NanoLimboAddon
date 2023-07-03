@@ -40,7 +40,7 @@ public class LimboManager {
         titles = new HashMap<>();
         afk = new HashSet<>();
         Configuration limboSection = config.getConfig().getSection("limbos");
-        maxPlayers = limboSection.getInt("max-players");
+        maxPlayers = config.getConfig().getInt("max-players");
         for (String server : limboSection.getKeys()) {
             LimboType type = LimboType.getType(
                     limboSection.getString(server + ".type"));
