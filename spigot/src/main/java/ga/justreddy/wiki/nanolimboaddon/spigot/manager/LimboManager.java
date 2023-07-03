@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.bukkit.entity.Player;
+import sun.jvm.hotspot.interpreter.BytecodeIf;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,5 +67,9 @@ public class LimboManager {
             afk.put(player.getUniqueId(), System.currentTimeMillis());
         }
         return false;
+    }
+
+    public int getRemainingAfkTime(Player player) {
+        return (int) (System.currentTimeMillis() - afk.getOrDefault(player.getUniqueId(), 0L) / 1000);
     }
 }

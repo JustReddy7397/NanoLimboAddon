@@ -8,7 +8,6 @@
     <artifactId>NanoLimboAddon</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-
     <name>NanoLimboAddon</name>
 
     <properties>
@@ -17,6 +16,7 @@
     </properties>
 
     <build>
+        <finalName>NanoLimboAddon-Bungee</finalName>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
@@ -75,7 +75,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

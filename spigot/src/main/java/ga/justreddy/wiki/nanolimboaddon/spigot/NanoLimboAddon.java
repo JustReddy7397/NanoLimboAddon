@@ -3,6 +3,7 @@ package ga.justreddy.wiki.nanolimboaddon.spigot;
 import ga.justreddy.wiki.nanolimboaddon.spigot.listener.AFKListener;
 import ga.justreddy.wiki.nanolimboaddon.spigot.manager.BungeeManager;
 import ga.justreddy.wiki.nanolimboaddon.spigot.manager.LimboManager;
+import ga.justreddy.wiki.nanolimboaddon.spigot.tasks.AfkTask;
 import ga.justreddy.wiki.nanolimboaddon.spigot.util.ChatUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,7 +35,7 @@ public final class NanoLimboAddon extends JavaPlugin {
         limboManager = new LimboManager(getConfig().getStringList("limbos"), getConfig().getInt("afk-time"));
         getServer().getPluginManager().registerEvents(new AFKListener(limboManager), this);
 
-
+        getServer().getScheduler().runTaskTimerAsynchronously(this, new AfkTask(limboManager), 0, 20L);
 
     }
 

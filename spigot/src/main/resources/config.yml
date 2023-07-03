@@ -5,3 +5,5 @@ limbos:
 # In SECONDS!
 # How long should we wait before we define the player as AFK ?
 afk-time: 20
+
+afk-message: "&cYou will be AFK in &e&l10 seconds!"
