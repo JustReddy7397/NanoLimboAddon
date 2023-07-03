@@ -11,7 +11,7 @@ This is an addon for the [NanoLimboPlugin](https://www.spigotmc.org/resources/na
   <p align="center">
     <br />
     <br />
-    <a href="https://github.com">SpigotMC</a>
+    <a href="https://www.spigotmc.org/resources/nanolimboaddon.110966/ ">SpigotMC</a>
     ·
     <a href="https://discord.gg/wfDdP7aJyg">Discord</a>
   
@@ -43,9 +43,16 @@ This is an addon for the [NanoLimboPlugin](https://www.spigotmc.org/resources/na
 
 ## Installation
 
-- Download the plugin from SpigotMC: Not available yet
+Bungee:
+- Download the plugin from SpigotMC: [Click](https://www.spigotmc.org/resources/nanolimboaddon.110966/ )
 - Put the Bungeecord version in your bungee's plugins folder
 - Put the Spigot version in your spigots plugins folder
 - Start editing the config.yml of both
 - Restart the server
-- Enjoy the plugin :) 
+- Enjoy the plugin :)
+
+Spigot:
+- Do Bungee installation
+- Edit config.yml and copy the servers from the Bungee's one to here
+- Restart the server
+- Enjoy the plugin :)
