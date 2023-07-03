@@ -27,6 +27,10 @@ public class PlayerDisconnectListener implements Listener {
         if (serverInfo == null) return;
         String name = serverInfo.getName();
         if (name == null) return;
+        if (manager.isServer(name, LimboType.AFK)) {
+            manager.removeFromAfk(player);
+            return;
+        }
         if (!manager.isServer(name, LimboType.QUEUE)) return;
         manager.removeFromQueue(player);
     }

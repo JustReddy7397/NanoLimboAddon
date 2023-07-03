@@ -32,24 +32,29 @@ public class Config {
 
     public Config(String name) throws IOException {
         String finalName = name.endsWith(".yml") ? name : name + ".yml";
-        File file = new File(NanoLimboAddon.getInstance().getDataFolder().getAbsolutePath(), finalName);
+        File file = new File(NanoLimboAddon.getInstance()
+                .getDataFolder().getAbsolutePath(), finalName);
 
         if (!file.exists()) {
             NanoLimboAddon.getInstance().getDataFolder().mkdir();
-            Files.copy(NanoLimboAddon.getInstance().getResourceAsStream(finalName), file.toPath());
+            Files.copy(NanoLimboAddon.getInstance()
+                    .getResourceAsStream(finalName), file.toPath());
         }
 
         this.file = file;
-        this.config =  ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+        this.config =  ConfigurationProvider
+                .getProvider(YamlConfiguration.class).load(file);
         reload();
     }
 
     public void reload() throws IOException {
-        this.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+        this.config = ConfigurationProvider
+                .getProvider(YamlConfiguration.class).load(file);
     }
 
     public void save() throws IOException {
-        ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, file);
+        ConfigurationProvider
+                .getProvider(YamlConfiguration.class).save(config, file);
     }
 
     public boolean isOutdated(final int currentVersion) {

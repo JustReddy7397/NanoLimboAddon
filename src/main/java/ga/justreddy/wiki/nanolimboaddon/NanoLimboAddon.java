@@ -6,12 +6,15 @@ import ga.justreddy.wiki.nanolimboaddon.listeners.PlayerDisconnectListener;
 import ga.justreddy.wiki.nanolimboaddon.listeners.PlayerJoinListener;
 import ga.justreddy.wiki.nanolimboaddon.listeners.ServerSwitchListener;
 import ga.justreddy.wiki.nanolimboaddon.manager.LimboManager;
+import ga.justreddy.wiki.nanolimboaddon.timers.QueueTimer;
+import ga.justreddy.wiki.nanolimboaddon.timers.TitleTimer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
+import java.util.Timer;
 import java.util.logging.Logger;
 
 /**
@@ -26,6 +29,9 @@ public final class NanoLimboAddon extends Plugin {
 
     LimboManager manager;
     Config config;
+
+    Timer queueTimer;
+    Timer titleTimer;
 
     @Override
     public void onEnable() {
@@ -43,10 +49,17 @@ public final class NanoLimboAddon extends Plugin {
         pluginManager.registerListener(this, new PlayerDisconnectListener());
         pluginManager.registerListener(this, new PlayerJoinListener());
         pluginManager.registerListener(this, new ServerSwitchListener());
+
+        queueTimer = new Timer();
+        queueTimer.schedule(new QueueTimer(manager), 0, 1000L);
+        titleTimer = new Timer();
+        titleTimer.schedule(new TitleTimer(manager, config.getConfig()), 0, 5 * 1000L);
+
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        queueTimer.cancel();
+        titleTimer.cancel();
     }
 }

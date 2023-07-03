@@ -18,8 +18,7 @@ limbos:
     type: QUEUE
 
 # Where to send the player to when they are leaving the queue
-lobbies:
-  - lobby
+lobby: lobby
 
 titles:
   afk:
@@ -30,7 +29,8 @@ titles:
     subtitle: "&bYou are &3&l#<number> &bin the queue"
 
 messages:
-  type-hub: "&cYou are AFK, run /hub to return to hub."
+  afk: "&cYou are AFK, run /hub to return to hub."
+  queue: "&bYou are &3&l#<number> &bin the queue"
 
 # Only works in the AFK type servers
 # Which command should we allow the player to use while AFK ?

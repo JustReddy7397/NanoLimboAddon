@@ -22,19 +22,28 @@ import java.util.stream.Collectors;
 @Getter
 public class LimboManager {
 
+    Set<ProxiedPlayer> afk;
+
     Map<String, LimboType> servers;
+
     Map<ProxiedPlayer, Long> queue;
+
     Map<ProxiedPlayer, Title> titles;
+
     int maxPlayers;
+
+    String lobbyServer;
 
     public LimboManager(Config config) {
         servers = new HashMap<>();
         queue = new HashMap<>();
         titles = new HashMap<>();
+        afk = new HashSet<>();
         Configuration limboSection = config.getConfig().getSection("limbos");
         maxPlayers = limboSection.getInt("max-players");
         for (String server : limboSection.getKeys()) {
-            LimboType type = LimboType.getType(limboSection.getString(server + ".type"));
+            LimboType type = LimboType.getType(
+                    limboSection.getString(server + ".type"));
             if (type == null) {
                 ChatUtil.sendConsole("&7[&dNanoLimboAddon&7] &cInvalid type for server: " + server);
                 ChatUtil.sendConsole("&7[&dNanoLimboAddon&7] &cExpected AFK or QUEUE but got: " +
@@ -46,6 +55,7 @@ public class LimboManager {
             ChatUtil.sendConsole("&7[&dNanoLimboAddon&7] &aLoaded server:" + server
                     + " with type: " + type);
         }
+        this.lobbyServer = config.getConfig().getString("lobby");
     }
 
     public boolean isFull() {
@@ -54,7 +64,8 @@ public class LimboManager {
 
     public int getOnline() {
         int count = 0;
-        for (ServerInfo serverInfo : ProxyServer.getInstance().getServersCopy().values()) {
+        for (ServerInfo serverInfo : ProxyServer.getInstance()
+                .getServersCopy().values()) {
             String name = serverInfo.getName();
             LimboType type = servers.getOrDefault(name, null);
             if (servers.containsKey(name) && type == LimboType.QUEUE) continue;
@@ -72,12 +83,23 @@ public class LimboManager {
         titles.remove(player);
     }
 
+    public void addToAfK(ProxiedPlayer player) {
+        afk.add(player);
+    }
+
+    public void removeFromAfk(ProxiedPlayer player) {
+        afk.remove(player);
+        titles.remove(player);
+    }
+
     public Title getTitle(ProxiedPlayer player) {
-        return titles.getOrDefault(player, ProxyServer.getInstance().createTitle());
+        return titles.getOrDefault(player,
+                ProxyServer.getInstance().createTitle());
     }
 
     public boolean isServer(String name, LimboType type) {
-        return servers.containsKey(name) && servers.getOrDefault(name, null) == type;
+        return servers.containsKey(name) &&
+                servers.getOrDefault(name, null) == type;
     }
 
     public void sendToRandomQueueServer(ProxiedPlayer player) {
@@ -89,12 +111,14 @@ public class LimboManager {
         List<String> servers = new ArrayList<>(queueServers.keySet());
         servers = servers.stream().filter(server ->
                         ProxyServer.getInstance().getServerInfo(server) != null
-                ).sorted(Comparator.comparing(s -> ProxyServer.getInstance().getServerInfo(s)
+                ).sorted(Comparator.comparing(s ->
+                        ProxyServer.getInstance().getServerInfo(s)
                         .getPlayers().size()))
                 .collect(Collectors.toList());
         ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(servers.get(0));
         if (serverInfo == null) {
-            throw new IllegalStateException("Can't find a QUEUE server to send " + player.getName() + " to!");
+            throw new IllegalStateException("Can't find a QUEUE server to send "
+                    + player.getName() + " to!");
         }
         player.connect(serverInfo);
         addToQueue(player);
@@ -114,12 +138,14 @@ public class LimboManager {
                 .collect(Collectors.toList());
         ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(servers.get(0));
         if (serverInfo == null) {
-            throw new IllegalStateException("Can't find a AFK server to send " + player.getName() + " to!");
+            throw new IllegalStateException("Can't find a AFK server to send " +
+                    player.getName() + " to!");
         }
         if (player.getServer() == null) return;
         if (player.getServer().getInfo() == null) return;
         if (player.getServer().getInfo().getName().equalsIgnoreCase(serverInfo.getName())) return;
         player.connect(serverInfo);
+        addToAfK(player);
     }
 
     public ProxiedPlayer getFirstPlayerInQueue() {

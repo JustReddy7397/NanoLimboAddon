@@ -44,7 +44,8 @@ public class ChatListener implements Listener {
             message = message.replace("/", "");
             String finalMessage = message; // Lambda's are stupid
             boolean isCommand = allowed_commands.stream()
-                            .anyMatch(cmd -> cmd.equalsIgnoreCase(finalMessage));
+                            .anyMatch(cmd ->
+                                    cmd.equalsIgnoreCase(finalMessage));
             if (isCommand) return;
             event.setCancelled(true);
             return;

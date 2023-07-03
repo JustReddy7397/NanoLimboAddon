@@ -51,6 +51,11 @@ public class ServerSwitchListener implements Listener {
             return;
         }
 
+        if (manager.isServer(fromName, LimboType.AFK)) {
+            manager.removeFromAfk(player);
+            return;
+        }
+
     }
 
 }
