@@ -149,6 +149,7 @@ public class LimboManager {
     }
 
     public ProxiedPlayer getFirstPlayerInQueue() {
+        if (queue.isEmpty()) return null;
         List<ProxiedPlayer> result = queue.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
